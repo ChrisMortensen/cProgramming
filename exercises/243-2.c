@@ -1,35 +1,28 @@
 #include <stdio.h>
 
-
 void main(){
-
 	int watts,lumens;
 
 	printf("Please provide the wattage of the light bulb:\n");
 	scanf("%d",&watts);
-	switch (watts)
-	{
-	case 15:
+
+	if(watts == 15){
 		lumens = 125;
-		break;
-	case 25:
+	} else if(watts == 25){
 		lumens = 215;
-		break;
-	case 40:
+	} else if (watts == 40){
 		lumens = 500;
-		break;
-	case 60:
+	} else if (watts == 60){
 		lumens = 880;
-		break;
-	case 75:
+	} else if (watts == 75){
 		lumens = 1000;
-		break;
-	case 100:
+	} else if (watts == 100){
 		lumens = 1675;
-		break;
-	default:
+	} else {
 		lumens = -1;
-		break;
 	}
+
 	printf("The brightness of the lightbulb is %d lumens.\n", lumens);
+
+	return;
 }
