@@ -5,7 +5,7 @@ void main(){
 
 	double x,y,r;
 	double distfromMiddle;
-	char* awnser;
+	char* anwser;
 
 	printf("Please provide the x and y coordiantes for the point:\n");
 	scanf("%lf %lf",&x,&y);
@@ -16,14 +16,13 @@ void main(){
 	distfromMiddle = sqrt(x*x+y*y);
 
 	if (distfromMiddle<r){
-		awnser = "inside";
+		anwser = "inside";
 	} else if (distfromMiddle==r){
-		awnser = "on the periphery";
+		anwser = "on the periphery";
 	} else{
-		awnser = "outside";
-		
+		anwser = "outside";
 	}
-	printf("The point is %s of the circle\n",awnser);
+	printf("The point is %s of the circle\n",anwser);
 
 	return;
 }
