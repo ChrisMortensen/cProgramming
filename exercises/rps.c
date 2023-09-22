@@ -5,26 +5,32 @@
 
 void main(){
 
-	char p1Hand,p2Hand;
+	char pHand,cHand;
 	int winner;
 
-	printf("Choose your hand (r, p or s):\n");
-	scanf("%c", &p1Hand);
+	printf("Choose your hand (r for rock, p for paper or s for scissors):\n");
+	scanf("%c", &pHand);
 
+	if (pHand != 'r' && pHand != 'p' && pHand != 's')
+	{
+		printf("Error! Please provide a valid input.\n");
+		return;
+	}
+	
 	srand(time(NULL));
 	int r = rand() % 3;
 	switch (r)
 	{
 	case 0:
-		p2Hand = 'r';
+		cHand = 'r';
 		printf("The computer chose rock.\n");
 		break;
 	case 1:
-		p2Hand = 'p';
+		cHand = 'p';
 		printf("The computer chose paper.\n");
 		break;
 	case 2:
-		p2Hand = 's';
+		cHand = 's';
 		printf("The computer chose stone.\n");
 		break;
 	default:
@@ -32,10 +38,10 @@ void main(){
 	}
 
 	winner = 
-	p1Hand == 'r' && p2Hand == 's' ? 1 : 
-	p1Hand == 'p' && p2Hand == 'r' ? 1 : 
-	p1Hand == 's' && p2Hand == 'p' ? 1 : 
-	p1Hand == p2Hand ? 0 : 2;
+	pHand == 'r' && cHand == 's' ? 1 : 
+	pHand == 'p' && cHand == 'r' ? 1 : 
+	pHand == 's' && cHand == 'p' ? 1 : 
+	pHand == cHand ? 0 : 2;
 
 	switch (winner)
 	{
