@@ -45,6 +45,7 @@ void shuffleDeck(Deck *);
 void addCard(Deck *deck, Card card);
 void printDeck(Deck);
 void start();
+void removeCard(Deck *deck, Card cardToRemove);
 
 int main(void)
 {
@@ -55,6 +56,7 @@ int main(void)
 	newCard.suit = heart;
 	newCard.rank = four;
 	addCard(&deck, newCard);
+	removeCard(&deck, newCard); // Removes the first four of hearts in the deck
 	printDeck(deck);
 
 	free(deck.cards); // Is also run when the program is terminated so in this case it dosent make a difference
@@ -111,4 +113,27 @@ void addCard(Deck *deck, Card card)
 	deck->cards[deck->size].suit = card.suit;
 	deck->cards[deck->size].rank = card.rank;
 	deck->size++;
+}
+
+void removeCard(Deck *deck, Card cardToRemove)
+{
+	int i = 0;
+	int found = 0;
+	while (i < deck->size && found == 0)
+	{
+		if (deck->cards[i].suit == cardToRemove.suit && deck->cards[i].rank == cardToRemove.rank)
+		{
+			for (int j = i; j < deck->size - 1; j++)
+			{
+				deck->cards[j] = deck->cards[j + 1];
+			}
+			deck->size--;
+			deck->cards = (Card *)realloc(deck->cards, deck->size * sizeof(Card));
+			found = 1;
+		}
+		else
+		{
+			i++;
+		}
+	}
 }
