@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"stdio.h": "c",
-		"primes.h": "c"
+		"primes.h": "c",
+		"stdlib.h": "c",
+		"deck.h": "c"
 	}
 }

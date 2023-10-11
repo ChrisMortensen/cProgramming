@@ -1,44 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <deck.h>
 #include <time.h>
 #define SHUFFLES 100
-
-typedef enum
-{
-	two = 2,
-	three,
-	four,
-	five,
-	six,
-	seven,
-	eight,
-	nine,
-	ten,
-	jack,
-	queen,
-	king,
-	ace
-} Rank;
-
-typedef enum
-{
-	heart,
-	spade,
-	club,
-	diamond
-} Suit;
-
-typedef struct
-{
-	Rank rank;
-	Suit suit;
-} Card;
-
-typedef struct
-{
-	Card *cards;
-	int size;
-} Deck;
 
 Deck createDeck();
 void shuffleDeck(Deck *);
