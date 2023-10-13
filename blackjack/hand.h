@@ -1,9 +1,11 @@
-
+#ifndef HAND_H
+#define HAND_H
 typedef struct
 {
 	Card *cards;
 	int size;
 	int sum;
+	int soft;
 } Hand;
 
 void handSum(Hand *hand)
@@ -26,3 +28,5 @@ int aceCheck(Hand hand){
 	}
 	return 0;
 }
+
+#endif

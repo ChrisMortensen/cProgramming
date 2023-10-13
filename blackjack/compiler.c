@@ -5,6 +5,7 @@
 #include "hand.h"
 #include "deck.h"
 #include "game.h"
+#include "ai.h"
 #define SESSIONS 100
 
 void start();

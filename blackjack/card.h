@@ -1,3 +1,5 @@
+#ifndef CARDS_H
+#define CARDS_H
 
 typedef enum
 {
@@ -28,4 +30,7 @@ typedef struct
 {
 	Rank rank;
 	Suit suit;
+	int value;
 } Card;
+
+#endif

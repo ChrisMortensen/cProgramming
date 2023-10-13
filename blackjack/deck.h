@@ -1,3 +1,5 @@
+#ifndef DECK_H
+#define DECK_H
 #define SHUFFLES 100
 
 typedef struct
@@ -11,10 +13,15 @@ Deck createDeck()
 	Deck deck;
 	deck.cards = (Card *)malloc(52 * sizeof(Card));
 	deck.size = 0;
-	for (int suit = 0; suit < 4; suit++)
-	{
-		for (int rank = 2; rank <= 14; rank++)
-		{
+	for (int suit = 0; suit < 4; suit++){
+		for (int rank = 2; rank <= 14; rank++){
+			if(rank == 14){
+				deck.cards[deck.size].value = 11;
+			} else if (rank>10){
+				deck.cards[deck.size].value = 10;
+			} else{
+				deck.cards[deck.size].value = rank;
+			}
 			deck.cards[deck.size].rank = rank;
 			deck.cards[deck.size].suit = suit;
 			deck.size++;
@@ -53,7 +60,7 @@ void addCard(Deck *deck, Card card)
 	deck->size++;
 }
 
-void removeCard(Deck *deck, Card cardToRemove)
+void removeSpecificCard(Deck *deck, Card cardToRemove)
 {
 	int i = 0;
 	int found = 0;
@@ -75,3 +82,5 @@ void removeCard(Deck *deck, Card cardToRemove)
 		}
 	}
 }
+
+#endif
