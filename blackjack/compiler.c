@@ -16,12 +16,15 @@ int main(void)
 	start();
 	Deck deck = createDeck(deck);
 	shuffleDeck(&deck);
+	
+	/*
 	Card newCard;
 	newCard.suit = heart;
 	newCard.rank = four;
 	addCard(&deck, newCard);
 	removeCard(&deck, newCard); // Removes the first four of hearts in the deck
 	printDeck(deck);
+	*/
 
 	free(deck.cards); // Is also run when the program is terminated so in this case it dosent make a difference
 	return 0;

@@ -3,6 +3,7 @@
 		"stdio.h": "c",
 		"primes.h": "c",
 		"stdlib.h": "c",
-		"deck.h": "c"
+		"deck.h": "c",
+		"time.h": "c"
 	}
 }
