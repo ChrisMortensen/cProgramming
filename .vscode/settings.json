@@ -4,6 +4,8 @@
 		"primes.h": "c",
 		"stdlib.h": "c",
 		"deck.h": "c",
-		"time.h": "c"
+		"time.h": "c",
+		"game.h": "c",
+		"card.h": "c"
 	}
 }

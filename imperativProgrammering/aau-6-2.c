@@ -1,37 +1,21 @@
-#include <stdio.h> //Not done
+#include <stdio.h>
 
-
-typedef struct Time {
-	int seconds; 
-	int minutes; 
-	int hours;
-
-} Time;
-
-Time hours_minutes_seconds(int seconds);
+void time(int *, int *, int *);
 
 void main(){
-	int seconds, minutes, hours;
+	int seconds = 0, minutes = 0, hours = 0;
 	printf("Please provide the amount of seconds you want converted:\n");
 	scanf(" %d", &seconds);
-	Time time = hours_minutes_seconds(seconds);
-	printf("%d Hours, %d Minutes, %d Seconds", time.hours, time.minutes, time.seconds);
+	time(&seconds, &minutes, &hours);
+	printf("%d Hours, %d Minutes, %d Seconds", hours, minutes, seconds);
 	return;
 }
 
-Time hours_minutes_seconds(int seconds){
-	Time result;
+void time(int *seconds, int *minutes, int *hours){
 
-	int minutes, hours;
-	minutes = seconds / 60;
-	seconds %= 60;
+	*minutes = *seconds / 60;
+	*seconds %= 60;
 
-	hours = minutes / 60;
-	minutes %= 60;
-
-	result.seconds = seconds;
-	result.minutes = minutes;
-	result.hours = hours;
-	
-	return result;
+	*hours = *minutes / 60;
+	*minutes %= 60;
 }
