@@ -5,16 +5,17 @@
 #include "hand.h"
 #include "deck.h"
 #include "game.h"
+#define SESSIONS 100
 
 void start();
 
 int main(void)
 {
 	start();
-	Deck deck = createDeck(deck);
-	shuffleDeck(&deck);
-	printDeck(deck);
-	free(deck.cards); // Is also run when the program is terminated so in this case it dosent make a difference
+	Game game = createGame();
+	printDeck(game.deck);
+
+	free(game.deck.cards); // Is also run when the program is terminated so in this case it dosent make a difference
 	return 0;
 }
 
