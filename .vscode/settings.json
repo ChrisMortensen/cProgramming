@@ -6,6 +6,7 @@
 		"deck.h": "c",
 		"time.h": "c",
 		"game.h": "c",
-		"card.h": "c"
+		"card.h": "c",
+		"memory.h": "c"
 	}
 }

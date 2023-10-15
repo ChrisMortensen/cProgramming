@@ -40,6 +40,7 @@ void drawCard (int amount, Deck *deck, Hand *hand){
 		hand->cards = (Card *)realloc(hand->cards, (hand->size + 1) * sizeof(Card));
 		hand->cards[hand->size] = card;
 		hand->size++;
+		hand->sum+=card.value;
 		
 		for (int i = 1; i < deck->size; i++) {
             deck->cards[i - 1] = deck->cards[i];
