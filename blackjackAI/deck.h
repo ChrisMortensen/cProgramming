@@ -83,4 +83,12 @@ void removeSpecificCard(Deck *deck, Card cardToRemove)
 	}
 }
 
+void destroyDeck(Deck *deck) {
+    if (deck->cards != NULL) {
+        free(deck->cards);
+        deck->cards = NULL;
+        deck->size = 0;
+    }
+}
+
 #endif

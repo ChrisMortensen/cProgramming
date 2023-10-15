@@ -41,10 +41,9 @@ void findParents(Generation gen){
 Generation createGen(){
 	Generation gen;
 	for (int ai = 0; ai < POPULATIONSIZE; ai++) {
-		gen.population[ai] = *(Ai *)malloc(sizeof(Ai));
 		gen.population[ai].fitness = 0;
 	}
-	return gen;
+	return gen;	
 }
 
 Generation firstGeneration(){
