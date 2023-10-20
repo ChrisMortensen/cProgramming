@@ -1,7 +1,7 @@
 /*
 	Navn			:	Christian Svalgaard Mortensen
 	Email			:	christian@svalgaard.net
-	Gruppe			:	Mig selv
+	Gruppe			:	1
 	Studieretning	:	Cyber- og computer teknologi
 */
 
