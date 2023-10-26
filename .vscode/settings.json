@@ -8,5 +8,6 @@
 		"game.h": "c",
 		"card.h": "c",
 		"memory.h": "c"
-	}
+	},
+	"C_Cpp.errorSquiggles": "enabled",
 }
