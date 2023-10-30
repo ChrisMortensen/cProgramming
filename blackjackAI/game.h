@@ -5,6 +5,7 @@ typedef struct
 	Hand playerHand;
 	Hand dealerHand;
 	Deck deck;
+	int bet;
 } Game;
 
 void drawCard (int, Deck *, Hand *);
@@ -13,7 +14,6 @@ void initializeHand(Hand *);
 
 Game createGame (){
 	Game game;
-	game.dealerHand;
 	game.deck = createDeck();
 	initializeHand(&game.dealerHand);
 	initializeHand(&game.playerHand);

@@ -20,6 +20,15 @@ typedef struct
 
 } Generation;
 
+typedef enum {
+	stand,
+	hit,
+	doubleDown
+} Action;
+
+void playerTurn(Ai *ai, Game *game, Action action);
+void dealerTurn(Game *game);
+
 void findParents(Generation gen){
 	for (int i = 0; i < PARENTS; i++) {
         gen.bestOfPopulation[i] = &gen.population[i];
@@ -105,9 +114,52 @@ Generation newGeneration(Generation priorGen){
 	return gen;
 }
 
-void fitnessScore(Generation gen, int totalGames){}
+void fitnessScore(Generation *gen, int totalGames){
+	for (int AiID = 0; AiID < POPULATIONSIZE; AiID++)
+	{
+		Game game = createGame();
+		gen->population[AiID].fitness--;
+		game.bet++;
+		if (game.playerHand.sum == 21) {
+			dealerTurn(&game);
+		}
+		Action action;
+		do {
+			if(game.playerHand.soft == 0) {
+				action = gen->population[AiID].hardTable[game.dealerHand.sum][game.playerHand.sum];
+			} else	{
+				action = gen->population[AiID].softTable[game.dealerHand.sum][game.playerHand.sum];
+			}
+			playerTurn(&(gen->population[AiID]), &game, action);
+			if(game.playerHand.sum > 21){
+				destroyDeck(&(game.deck));
+				return;
+			}
+		} while (action == hit);
+	}
+}
 
-void dealerTurn(){}
+void playerTurn(Ai *ai, Game *game, Action action){
+	switch (action)
+	{
+	case stand:
+		dealerTurn(game);
+		break;
+	case hit:
+		drawCard(1, &(game->deck), &(game->playerHand));
+		break;
+	case doubleDown:
+		ai->fitness--;
+		game->bet++;
+		drawCard(1, &(game->deck), &(game->playerHand));
+		dealerTurn(game);
+		break;
+	default:
+		break;
+	}
+}
+
+void dealerTurn(Game *game){}
 
 
 #endif
