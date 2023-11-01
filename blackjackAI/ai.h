@@ -117,25 +117,34 @@ Generation newGeneration(Generation priorGen){
 void fitnessScore(Generation *gen, int totalGames){
 	for (int AiID = 0; AiID < POPULATIONSIZE; AiID++)
 	{
-		Game game = createGame();
-		gen->population[AiID].fitness--;
-		game.bet++;
-		if (game.playerHand.sum == 21) {
-			dealerTurn(&game);
+		for (int gameID = 0; gameID < totalGames; gameID++)
+		{
+			Game game = createGame();
+			gen->population[AiID].fitness--;
+			game.bet++;
+			if (game.playerHand.sum == 21) {
+				dealerTurn(&game);
+			}
+			Action action;
+			do {
+				if(game.playerHand.soft == 0) {
+					action = gen->population[AiID].hardTable[game.dealerHand.sum][game.playerHand.sum];
+				} else	{
+					action = gen->population[AiID].softTable[game.dealerHand.sum][game.playerHand.sum];
+				}
+				playerTurn(&(gen->population[AiID]), &game, action);
+				if(game.playerHand.sum > 21){
+					if (game.playerHand.soft == 1)
+					{
+						game.playerHand.sum -= 10;
+						game.playerHand.soft = 0;
+					} else {
+						destroyDeck(&(game.deck));
+						continue;
+					}
+				}
+			} while (action == hit);
 		}
-		Action action;
-		do {
-			if(game.playerHand.soft == 0) {
-				action = gen->population[AiID].hardTable[game.dealerHand.sum][game.playerHand.sum];
-			} else	{
-				action = gen->population[AiID].softTable[game.dealerHand.sum][game.playerHand.sum];
-			}
-			playerTurn(&(gen->population[AiID]), &game, action);
-			if(game.playerHand.sum > 21){
-				destroyDeck(&(game.deck));
-				return;
-			}
-		} while (action == hit);
 	}
 }
 
@@ -159,7 +168,9 @@ void playerTurn(Ai *ai, Game *game, Action action){
 	}
 }
 
-void dealerTurn(Game *game){}
+void dealerTurn(Game *game){
+	
+}
 
 
 #endif
