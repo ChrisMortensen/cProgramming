@@ -134,16 +134,22 @@ void fitnessScore(Generation *gen, int totalGames){
 				}
 				playerTurn(&(gen->population[AiID]), &game, action);
 				if(game.playerHand.sum > 21){
-					if (game.playerHand.soft == 1)
+					if (game.playerHand.soft != 0)
 					{
 						game.playerHand.sum -= 10;
-						game.playerHand.soft = 0;
+						game.playerHand.soft--;
 					} else {
 						destroyDeck(&(game.deck));
 						continue;
 					}
 				}
 			} while (action == hit);
+			if (game.playerHand.sum > game.dealerHand.sum){
+				gen->population[AiID].fitness += 2 * game.bet;
+			} else if (game.playerHand.sum == game.dealerHand.sum){
+				gen->population[AiID].fitness += game.bet;
+			}
+			destroyDeck(&(game.deck));
 		}
 	}
 }
@@ -169,7 +175,14 @@ void playerTurn(Ai *ai, Game *game, Action action){
 }
 
 void dealerTurn(Game *game){
-	
+	while (game->dealerHand.sum < 17)
+	{
+		drawCard(1, &(game->deck), &(game->dealerHand));
+		if (game->dealerHand.sum > 21 && game->dealerHand.soft > 0) {
+            game->dealerHand.sum -= 10;
+            game->dealerHand.soft--;
+        }
+	}
 }
 
 

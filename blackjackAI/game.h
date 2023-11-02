@@ -33,9 +33,7 @@ void drawCard (int amount, Deck *deck, Hand *hand){
 	for (int i = 0; i < amount; i++){
 		Card card = deck->cards[0];
 		if(card.value == 11){
-			hand->soft = 1;
-		}else{
-			hand->soft = 0;
+			hand->soft++;
 		}
 		hand->cards = (Card *)realloc(hand->cards, (hand->size + 1) * sizeof(Card));
 		hand->cards[hand->size] = card;

@@ -7,7 +7,7 @@
 #include "game.h"
 #include "ai.h"
 #define GENERATIONS 2
-#define PLAYEDHANDS 10
+#define TOTALHANDS 10
 
 
 void beforeStart();
@@ -17,14 +17,18 @@ int main(void)
 	Generation generations[GENERATIONS];
 	beforeStart();
 	generations[0] = firstGeneration();
-	//fitnessScore(&generations[0],PLAYEDHANDS);
+	//fitnessScore(&generations[0], TOTALHANDS);
 	findParents(&generations[0]);
+
+	/*		FOR WHEN FITNESS WORKS
 	for (int generationID = 1; generationID < GENERATIONS; generationID++)
 	{
 		generations[generationID] = newGeneration(generations[generationID-1]);
-		//fitnessScore(&generations[generationID], PLAYEDHANDS);
+		fitnessScore(&generations[generationID], PLAYEDHANDS);
 		findParents(&generations[generationID]);
 	}
+	*/
+
 	printf("End of the program.");
 	return 0;
 }
