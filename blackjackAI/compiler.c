@@ -18,14 +18,14 @@ int main(void)
 	beforeStart();
 	generations[0] = firstGeneration();
 	//fitnessScore(&generations[0],PLAYEDHANDS);
-	findParents(generations[0]);
+	findParents(&generations[0]);
 	for (int generationID = 1; generationID < GENERATIONS; generationID++)
 	{
 		generations[generationID] = newGeneration(generations[generationID-1]);
-		printf("\n\nTest : %d\n\n",generations[0].population[0].hardTable[0][0]);
 		//fitnessScore(&generations[generationID], PLAYEDHANDS);
-		findParents(generations[generationID]);
+		findParents(&generations[generationID]);
 	}
+	printf("End of the program.");
 	return 0;
 }
 
