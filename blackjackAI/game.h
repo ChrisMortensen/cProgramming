@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+
 typedef struct
 {
 	Hand playerHand;
@@ -11,9 +12,9 @@ typedef struct
 void drawCard (int, Deck *, Hand *);
 void initializeHand(Hand *);
 
-
 Game createGame (){
 	Game game;
+	game.bet = 0;
 	game.deck = createDeck();
 	initializeHand(&game.dealerHand);
 	initializeHand(&game.playerHand);
@@ -27,6 +28,7 @@ void initializeHand(Hand* hand) {
     hand->cards = NULL;
     hand->size = 0;
     hand->soft = 0;
+	hand->sum = 0;
 }
 
 void drawCard (int amount, Deck *deck, Hand *hand){
@@ -39,14 +41,12 @@ void drawCard (int amount, Deck *deck, Hand *hand){
 		hand->cards[hand->size] = card;
 		hand->size++;
 		hand->sum+=card.value;
-		
 		for (int i = 1; i < deck->size; i++) {
             deck->cards[i - 1] = deck->cards[i];
         }
 		deck->size--;
 		deck->cards = (Card *)realloc(deck->cards, deck->size * sizeof(Card));	
-	}
-	
+	}	
 }
 
 #endif

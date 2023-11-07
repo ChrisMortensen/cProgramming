@@ -6,28 +6,27 @@
 #include "deck.h"
 #include "game.h"
 #include "ai.h"
-#define GENERATIONS 2
-#define TOTALHANDS 10
-
+#define GENERATIONS 200
+#define TOTALHANDS 1000
 
 void beforeStart();
 
 int main(void)
 {
-	Generation generations[GENERATIONS];
 	beforeStart();
+	Generation generations[GENERATIONS];
 	generations[0] = firstGeneration();
-	//fitnessScore(&generations[0], TOTALHANDS);
+	fitnessScore(&generations[0], TOTALHANDS);
 	findParents(&generations[0]);
 
-	/*		FOR WHEN FITNESS WORKS
 	for (int generationID = 1; generationID < GENERATIONS; generationID++)
 	{
+		printf("Gen : %3d | Fitness : %d\n", generationID-1, generations[generationID-1].bestOfPopulation[0]->fitness);
 		generations[generationID] = newGeneration(generations[generationID-1]);
-		fitnessScore(&generations[generationID], PLAYEDHANDS);
+		fitnessScore(&generations[generationID], TOTALHANDS);
 		findParents(&generations[generationID]);
+
 	}
-	*/
 
 	printf("End of the program.");
 	return 0;

@@ -1,5 +1,6 @@
 #ifndef DECK_H
 #define DECK_H
+
 #define SHUFFLES 100
 
 typedef struct

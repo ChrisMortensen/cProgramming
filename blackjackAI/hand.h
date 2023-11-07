@@ -1,5 +1,6 @@
 #ifndef HAND_H
 #define HAND_H
+
 typedef struct
 {
 	Card *cards;
