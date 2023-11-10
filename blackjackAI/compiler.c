@@ -7,7 +7,7 @@
 #include "game.h"
 #include "ai.h"
 #define GENERATIONS 200
-#define TOTALHANDS 1000
+#define TOTALHANDS 200
 
 void beforeStart();
 

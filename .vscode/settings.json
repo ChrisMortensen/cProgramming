@@ -8,6 +8,17 @@
 		"game.h": "c",
 		"card.h": "c",
 		"memory.h": "c",
-		"hand.h": "c"
+		"hand.h": "c",
+		"ctype.h": "c",
+		"string.h": "c",
+		"algorithm": "c",
+		"functional": "c",
+		"bit": "c",
+		"unordered_map": "c",
+		"limits": "c",
+		"streambuf": "c",
+		"array": "c",
+		"string_view": "c",
+		"initializer_list": "c"
 	},
 }
