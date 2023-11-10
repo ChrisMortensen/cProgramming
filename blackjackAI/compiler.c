@@ -14,7 +14,7 @@ void beforeStart();
 int main(void)
 {
 	beforeStart();
-	Generation generations[GENERATIONS];
+	static Generation generations[GENERATIONS];
 	generations[0] = firstGeneration();
 	fitnessScore(&generations[0], TOTALHANDS);
 	findParents(&generations[0]);
