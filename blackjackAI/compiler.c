@@ -27,6 +27,7 @@ int main(void)
 		findParents(&generations[generationID]);
 
 	}
+	printf("Gen : %3d | Fitness : %d\n", GENERATIONS - 1, generations[GENERATIONS - 1].bestOfPopulation[0]->fitness);
 
 	printf("End of the program.");
 	return 0;
