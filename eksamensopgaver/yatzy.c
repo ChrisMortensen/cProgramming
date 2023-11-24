@@ -1,7 +1,18 @@
+/*
+	Navn			:	Christian Svalgaard Mortensen
+	Email			:	csmo23@student.aau.dk
+	Gruppe			:	1
+	Studieretning	:	Cyber- og computer teknologi
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#define DIESIDES 6
+#define MAXCHOOSEABLEDIE 5
+#define TOTALTHROWS 15
 
 typedef enum {
 	Ones,
@@ -53,7 +64,7 @@ int fourOfAKind (int *die, int size);
 int smallStraight (int *die, int size);
 int largeStraight (int *die, int size);
 int fullHouse (int *die, int size);
-int chance (int *die);
+int chance (int *die, int size);
 int compare(const void *a, const void *b);
 int yatzy (int *die, int size);
 
@@ -75,12 +86,12 @@ int main (void){
 
 int *playYatzy(int dieAmount){
 	int *result = (int *)malloc(dieAmount * sizeof(int));
-	int games = 15;
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < TOTALTHROWS; i++)
 	{
 		int *die = throwDie(dieAmount);
 		result[i] = process(i, die, dieAmount);
 		printThrow(i, die, result[i], dieAmount);
+		free(die);
 	}
 	return result;
 }
@@ -97,7 +108,7 @@ void printThrow(throwType throw, int *die, int result, int size){
 void printYatzy(int result[]){
 	int sum = 0;
 	printf("\nScore Board:\n");
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < TOTALTHROWS; i++)
 	{
 		sum+= result[i];
 		printf("%s : %2d\n", throwNames[i], result[i]);
@@ -121,7 +132,7 @@ int *throwDie (int dieAmount){
 	int *die = (int *)malloc(dieAmount * sizeof(int));
 	for (int i = 0; i < dieAmount; i++)
 	{
-		die[i] = rand() % 6 + 1;
+		die[i] = rand() % DIESIDES + 1;
 	}
 	return die;
 }
@@ -150,31 +161,31 @@ int process (throwType type, int *die, int size){
 		result = 6 * count(6, die, size);
 		break;
 	case OnePair:
-		result = 2 * onePair(die, size);
+		result = onePair(die, size);
 		break;
 	case TwoPair:
 		result = twoPair(die, size);
 		break;
 	case ThreeOfAKind:
-		result = 3 * threeOfAKind(die, size);
+		result = threeOfAKind(die, size);
 		break;
 	case FourOfAKind:
-		result = 4 * fourOfAKind(die, size);
+		result = fourOfAKind(die, size);
 		break;
 	case SmallStraight:
-		result = 15 * smallStraight(die, size);
+		result = smallStraight(die, size);
 		break;
 	case LargeStraight:
-		result = 20 * largeStraight(die, size);
+		result = largeStraight(die, size);
 		break;
 	case FullHouse:
 		result = fullHouse(die, size);
 		break;
 	case Chance:
-		result = chance(die);
+		result = chance(die, size);
 		break;
 	case Yatzy:
-		result = 5 * yatzy(die, size);
+		result = yatzy(die, size);
 		break;
 	default:
 		break;
@@ -189,7 +200,7 @@ int count (int n, int *die, int size){
 		if (die[i] == n)
 		{
 			result++;
-			if (result == 5)
+			if (result == MAXCHOOSEABLEDIE)
 			{
 				break;
 			}
@@ -199,17 +210,17 @@ int count (int n, int *die, int size){
 }
 
 int onePair (int *die, int size){
-	for (int i = 6; i > 0; i--)
+	for (int i = DIESIDES; i > 0; i--)
 	{
 		if(count(i, die, size) >= 2){
-			return i;
+			return i*2;
 		}
 	}
 	return 0;
 }
 
 int twoPair (int *die, int size){
-	for (int i = 6; i > 0; i--)
+	for (int i = DIESIDES; i > 0; i--)
 	{
 		int amount = count(i, die, size); 
 		if(amount >= 4){
@@ -229,27 +240,27 @@ int twoPair (int *die, int size){
 
 int threeOfAKind (int *die, int size){
 	int result = 0;
-	for (int i = 6; i > 0; i--)
+	for (int i = DIESIDES; i > 0; i--)
 	{
 		if(count(i, die, size) >= 3){
 			result = i;
 		}
 	}
-	return result;
+	return result*3;
 }
 
 int fourOfAKind (int *die, int size){
-	for (int i = 6; i > 0; i--)
+	for (int i = DIESIDES; i > 0; i--)
 	{
 		if(count(i, die, size) >= 4){
-			return i;
+			return i*4;
 		}
 	}
 	return 0;
 }
 
 int smallStraight (int *die, int size){
-	return (count(1,die, size) > 0 &&
+	return 15 * (count(1,die, size) > 0 &&
 			count(2,die, size) > 0 &&
 			count(3,die, size) > 0 &&
 			count(4,die, size) > 0 &&
@@ -257,7 +268,7 @@ int smallStraight (int *die, int size){
 }
 
 int largeStraight (int *die, int size){
-	return (count(2,die, size) > 0 &&
+	return 20 * (count(2,die, size) > 0 &&
 			count(3,die, size) > 0 && 
 			count(4,die, size) > 0 &&
 			count(5,die, size) > 0 && 
@@ -265,10 +276,10 @@ int largeStraight (int *die, int size){
 }
 
 int fullHouse (int *die, int size){
-	int temp = threeOfAKind(die, size);
+	int temp = threeOfAKind(die, size) / 3;
 	if (temp != 0)
 	{
-		for (int i = 6; i > 0; i--)
+		for (int i = DIESIDES; i > 0; i--)
 		{
 			if (i != temp && count(i, die, size) >= 2){
 				return temp * 3 + i * 2;
@@ -280,11 +291,10 @@ int fullHouse (int *die, int size){
 	return 0;
 }
 
-int chance (int *die){
-	int size = sizeof(die) / sizeof(die[0]);
+int chance (int *die, int size){
 	qsort(die, size, sizeof(int), compare);
 	int sum = 0;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < MAXCHOOSEABLEDIE; i++)
 	{
 		sum += die[i];
 	}
@@ -296,11 +306,11 @@ int compare(const void *a, const void *b) {
 }
 
 int yatzy (int *die, int size){
-	for (int i = 6; i > 0; i--)
+	for (int i = DIESIDES; i > 0; i--)
 	{
-		if (count(i, die, size) >= 5)
+		if (count(i, die, size) >= MAXCHOOSEABLEDIE)
 		{
-			return i;
+			return 50;
 		}
 	}
 	return 0;
