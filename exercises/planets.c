@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 typedef struct
 {
@@ -28,27 +29,28 @@ int main(void){
 	FILE *f = fopen("text.txt", "w");
 	int length = (int)(sizeof(planets) / sizeof(planet));
 	savePlanets(f, planets, length);
+	fclose(f);
 	
 	FILE *f2 = fopen("text.txt", "r");
 	planet *p = loadPlanets(f2);
-	fclose(f);
 	fclose(f2);
-	printf("%s\n",p[0].name); 
+
+	printf("%s\n",p[1].name); 
 	
 	return 0;
 }
 
 planet *loadPlanets(FILE *f){
-	planet *p = (planet *) malloc(sizeof(planet));
 	int i = 0;
-	char *c;
+	char c[20];
+	planet *p = (planet *) malloc(sizeof(planet));
+	
 	fscanf(f, "%s", &c);
-	printf("%s", c);
-	while (c =="-")
+	while (strcmp(c,"END") != 0)
 	{
-		printf("%d",i);
 		p = (planet *) realloc(p,sizeof(planet) * (i + 1));
-		fscanf(f, "%s %lf %lf", p[i].name, &p[i].mass, &p[i].volume);
+		strcpy(p[i].name, c);
+		fscanf(f, "%lf %lf", &p[i].mass, &p[i].volume);
 		i++;
 		fscanf(f, "%s", &c);
 	}
@@ -60,6 +62,7 @@ void savePlanets (FILE *f, planet planets[], int length){
 	{
 		fprintf(f, "%s %e %e\n", planets[i].name, planets[i].mass, planets[i].volume);
 	}
+	fprintf(f, "END\n");
 }
 
 double returnDencity(planet p){
