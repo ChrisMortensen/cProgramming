@@ -1,35 +1,3 @@
-#include <stdio.h>
-#include <math.h>
-
-typedef enum {
-	hit,
-	stand,
-	doubleDown,
-	dealerTurn
-} Action;
-
-void main()
-{
-	Action act = hit;
-
-	switch (act)
-	{
-	case hit:
-		printf("%d\n", act);
-		act++;
-		break;
-	case stand:
-		printf("%d\n", act);
-		act=dealerTurn;
-		break;
-	case doubleDown:
-		printf("%d\n", act);
-		break;
-	case dealerTurn:
-		printf("%d\n", act);
-		break;
-	default:
-		break;
-	}
-	return;
+int hashKey(char *str){
+	return str[0] * 10000 + str[1] * 100 + str[2];
 }
