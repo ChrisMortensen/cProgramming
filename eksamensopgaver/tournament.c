@@ -54,7 +54,7 @@ void printMatch(match m){
 }
 
 void printClub(club c){
-	printf("Name : %s\nPoints : %d\nGoals : %d\nConceded Goals : %d\n", c.name, c.point, c.goals, c.concededGoals);
+	printf("\nName : %s\nPoints : %d\nGoals : %d\nConceded Goals : %d\n", c.name, c.point, c.goals, c.concededGoals);
 }
 
 void instantiateClub(club *c, char name[]){
@@ -103,27 +103,49 @@ void matchConversion(club **clubs, match match, int *clubsCount){
 	}
 }
 
-void loadStats(club **clubs, match *matches, int matchesCount){
-	int clubsCount = 0;
+void loadStats(club **clubs, match *matches, int matchesCount, int *clubsCount){
 	for (int i = 0; i < matchesCount; i++){
-		matchConversion(clubs, matches[i], &clubsCount);
+		matchConversion(clubs, matches[i], clubsCount);
 	}
 }
+
+int compareClubs(const void *a, const void *b) {
+    const club *clubA = (const club *)a;
+    const club *clubB = (const club *)b;
+
+    if (clubA->point != clubB->point) {
+        return clubB->point - clubA->point;
+    }
+
+    return (clubB->goals - clubB->concededGoals) - (clubA->goals - clubA->concededGoals);
+}
+
+void printResult(club *clubs, int clubsCount){
+	printf("Club  Points  Goals  C-Goals\n");
+	printf("----------------------------\n");
+	for (int i = 0; i < clubsCount; i++)
+	{
+		printf("%-3s     %02d     %02d      %02d\n", 
+		clubs[i].name, clubs[i].point, 
+		clubs[i].goals, clubs[i].concededGoals);
+	}
+	
+}
+
 
 int main(void) {
 	FILE *f = fopen("kampe-2023-2024.txt", "r");
 	int matchesCount = 0;
 	match *matches = loadMatches(f, &matchesCount);
-	club *clubs = NULL;
-	loadStats(&clubs, matches, matchesCount);
-	
-	for (int i = 0; i < 12; i++)
-	{
-		printf("\nCLUB_NR : %d\n", i + 1);
-		printClub(clubs[i]);
-	}
-	
     fclose(f);
+	int clubsCount = 0;
+	club *clubs = NULL;
+	loadStats(&clubs, matches, matchesCount, &clubsCount);
+	
+	//	FROM HERE
+	qsort(clubs, clubsCount, sizeof(club), compareClubs);	
+	printResult(clubs, clubsCount);
+
 	free(matches);
 	free(clubs);
 	return 0;
