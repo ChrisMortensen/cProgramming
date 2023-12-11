@@ -1,3 +1,10 @@
+/*
+	Navn			:	Christian Svalgaard Mortensen
+	Email			:	csmo23@student.aau.dk
+	Gruppe			:	1
+	Studieretning	:	Cyber- og computer teknologi
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
