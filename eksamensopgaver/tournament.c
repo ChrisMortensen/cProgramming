@@ -28,6 +28,33 @@ typedef struct
 
 } match;
 
+match *loadMatches(FILE *file, int *matchesCount);
+void instantiateClub(club *c, char name[]);
+void addMatch(club *c, match m, int team);
+void newClub(club **clubs, char name[], int *clubsCount);
+void matchConversion(club **clubs, match match, int *clubsCount);
+void loadStats(club **clubs, match *matches, int matchesCount, int *clubsCount);
+int compareClubs(const void *a, const void *b);
+void printResult(club *clubs, int clubsCount);
+
+int main(void) {
+	FILE *f = fopen("kampe-2023-2024.txt", "r");
+	int matchesCount = 0;
+	match *matches = loadMatches(f, &matchesCount);
+    fclose(f);
+	int clubsCount = 0;
+	club *clubs = NULL;
+	loadStats(&clubs, matches, matchesCount, &clubsCount);
+	
+	//	FROM HERE
+	qsort(clubs, clubsCount, sizeof(club), compareClubs);	
+	printResult(clubs, clubsCount);
+
+	free(matches);
+	free(clubs);
+	return 0;
+}
+
 match *loadMatches(FILE *file, int *matchesCount){
 	int i = 0;
 	char c[20];
@@ -48,20 +75,6 @@ match *loadMatches(FILE *file, int *matchesCount){
 	}
 	*matchesCount = i;
 	return m;
-}
-
-void printMatch(match m){
-	printf("%s    %d/%d %d.%d    %s - %s    %d - %d    %d\n",
-    m.weekday,
-	m.date[0], m.date[1], 
-    m.time[0], m.time[1], 
-    m.teams[0], m.teams[1], 
-    m.result[0], m.result[1], 
-    m.spectators);
-}
-
-void printClub(club c){
-	printf("\nName : %s\nPoints : %d\nGoals : %d\nConceded Goals : %d\n", c.name, c.point, c.goals, c.concededGoals);
 }
 
 void instantiateClub(club *c, char name[]){
@@ -137,23 +150,4 @@ void printResult(club *clubs, int clubsCount){
 		clubs[i].goals, clubs[i].concededGoals);
 	}
 	
-}
-
-
-int main(void) {
-	FILE *f = fopen("kampe-2023-2024.txt", "r");
-	int matchesCount = 0;
-	match *matches = loadMatches(f, &matchesCount);
-    fclose(f);
-	int clubsCount = 0;
-	club *clubs = NULL;
-	loadStats(&clubs, matches, matchesCount, &clubsCount);
-	
-	//	FROM HERE
-	qsort(clubs, clubsCount, sizeof(club), compareClubs);	
-	printResult(clubs, clubsCount);
-
-	free(matches);
-	free(clubs);
-	return 0;
 }
